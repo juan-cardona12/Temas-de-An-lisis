@@ -1,1 +1,97 @@
+##----------------------------------
+
+f <- function(i){ 1/(i**2)}
+x<-1000
+sum(f(1:(x)))
+
+##----------------------------------
+
+f <- function(x){ exp(-x^2)}
+lower = 0
+upper = 1
+integrate(f, lower, upper)
+
+integrate(f, lower, upper, subdivisions = 3L)
+
+##----------------------------------
+
+Numeros_primos<-function(n){
+  Posibles<-seq(1,n,by=2)
+  Posibles[1]<-2
+  for(i in 2:round(sqrt(n))){
+    if(Posibles[i]!=0){
+      for(j in seq(i + Posibles[i], n/2, by=Posibles[i])){
+        Posibles[j]<-0
+      }
+    }
+  }
+  return(Posibles[Posibles!=0])
+}
+primos(0)
+
+#https://es.wikibooks.org/wiki/Implementaci%C3%B3n_de_algoritmos_de_teor%C3%ADa_de_n%C3%BAmeros/Criba_de_Erat%C3%B3stenes
+
+##----------------------------------
+
+install.packages("Rmpfr")
+library(Rmpfr)
+rm(list=ls())
+cat("Raíces de a*x^2+b*x +c.\n")
+# Lectura de coeficientes desde el teclado (ENTER)
+a = 2 #as.numeric(readline(a = 2)) # Leer desde el teclado (en la consola)
+b = 4 #as.numeric(readline(b = 3))
+c = 2 #as.numeric(readline(c = 1))
+# Cálculos y criterio de parada
+if(a==0) stop("No es cuadrática")
+# cálculo del Discriminante
+d = mpfr(b^2-4*a*c,53)
+# ---
+if(d==0){
+  x1 = -b/(2*a)
+  cat("Una raíz real x1 = ", x1)
+}
+if(d>0){
+  x1 = (-b+sqrt(d))/(2*a)
+  x2 = (-b-sqrt(d))/(2*a)
+  cat("Dos raíces reales \n", "x1 = ", x1, "\n", "x2 = ", x2)
+}
+if(d<0) cat("Las raíces son complejas")
+
+##----------------------------------
+
+install.packages("matlib")
+library(matlib)
+
+A <- matrix( c(5, 1, 0,
+               3,-1, 2,
+               4, 0,-1), nrow=3, byrow=TRUE)
+
+
+B <- matrix( c(5, 1, 0), nrow=3)
+
+U <- triu(A, 1)
+
+L <- tril(A, -1)
+
+C <- L + U
+
+D <- A-U-L
+
+D1 <- solve(D)
+
+Tj <- D1%*%C
+
+a <- eigen(A)
+
+b <- eigen(Tj)
+
+solve(A,B)
+
+install.packages("Rlinsolve")
+library(Rlinsolve)
+lsolve.jacobi(A, B, xinit = NA, reltol = 1e-05, maxiter = 1000,
+              weight = 2/3, adjsym = TRUE, verbose = TRUE)
+
+
+
 
